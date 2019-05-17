@@ -7,8 +7,18 @@ use Illuminate\Http\Request;
 use App\Http\Resources\TweetResource;
 use Carbon\Carbon;
 
+
+use App\User;
+use Lcobucci\JWT\Token;
+use Tymon\JWTAuth\Token as TymonToken;
+
 class TweetController extends Controller
 {
+
+    public function __construct()
+    {
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,9 +26,10 @@ class TweetController extends Controller
      */
     public function index()
     {
-        $tweets = Tweet::all();
 
-        return response()->json(TweetResource::collection($tweets));
+        $tweets = Tweet::all()->sortByDesc('created_at');
+
+        return TweetResource::collection($tweets);
     }
 
     /**
@@ -39,7 +50,21 @@ class TweetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'tweet' => 'required|min:3'
+        ]);
+
+        try {
+            $tweet = new Tweet;
+            $tweet->tweet = $request->tweet;
+            $tweet->user_id = auth()->id();
+            $tweet->save();
+        }
+        catch(\Exception $e){
+            return response()->json($e);
+        }
+        return new TweetResource($tweet);
     }
 
     /**

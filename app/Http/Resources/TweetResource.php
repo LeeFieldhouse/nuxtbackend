@@ -16,6 +16,7 @@ class TweetResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'user' => $this->user->username,
             'tweet' => $this->tweet,
             'posted' => Carbon::parse($this->created_at->toDateTimeString())->diffForHumans()
