@@ -21,11 +21,13 @@ Route::group([
 ], function ($router) {
 
     Route::post('login', 'AuthController@login');
-    Route::post('register', 'AuthController@register');
+    Route::post('register', 'HomeController@register');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
     Route::get('user', 'AuthController@user');
     Route::resource('tweet', 'TweetController');
+    Route::get('userdetails', 'HomeController@userDetails');
 });
+
 

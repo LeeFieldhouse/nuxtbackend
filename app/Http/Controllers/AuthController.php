@@ -16,8 +16,8 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register', 'user']])->except([
-            'login', 'register', 'user'
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'user','logout']])->except([
+            'login', 'register', 'user','logout',
         ]);
     }
 
@@ -30,7 +30,7 @@ class AuthController extends Controller
     {
         $credentials = $request->only(['email', 'password']);
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => "Can't find the details!"], 401);
         }
 
         return (new UserResource($request->user()))->additional([
@@ -41,7 +41,7 @@ class AuthController extends Controller
     }
 
 
-    function register(UserRegisterRequest $request ) {
+    function register(Request $request ) {
 
         $user = new User;
         $user->username = str_slug($request->username);
@@ -62,6 +62,9 @@ class AuthController extends Controller
     }
 
     public function user(Request $request) {
+        if(!auth()->user()){
+            return '';
+        }
         return new UserResource(($request->user()));
     }
 
@@ -83,6 +86,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
+
         auth()->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
@@ -113,4 +117,7 @@ class AuthController extends Controller
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
+
+
+
 }
