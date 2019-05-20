@@ -43,22 +43,34 @@ class AuthController extends Controller
 
     function register(Request $request ) {
 
+        $request->validate([
+            'username' => 'required|unique:users',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6'
+        ]);
+        try {
         $user = new User;
         $user->username = str_slug($request->username);
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
 
-        if (! $token = auth()->attempt($request->only(['email', 'password']))) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        catch(\Exception $e){
+            return response()->json($e->errors);
         }
 
+        return 'Success';
+        // if (! $token = auth()->attempt($request->only(['email', 'password']))) {
+        //     return response()->json(['error' => 'Unauthorized'], 401);
+        // }
 
-        return (new UserResource($request->user()))->additional([
-            'meta' => [
-                'token' => $token
-            ]
-        ]);
+
+        // return (new UserResource($request->user()))->additional([
+        //     'meta' => [
+        //         'token' => $token
+        //     ]
+        // ]);
     }
 
     public function user(Request $request) {
