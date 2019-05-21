@@ -13,4 +13,8 @@ class Tweet extends Model
     public function likes() {
         return $this->hasMany(Like::class);
     }
+
+    public function tags() {
+        return $this->hasMany(Tag::class);
+    }
 }

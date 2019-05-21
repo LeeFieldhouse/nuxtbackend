@@ -12,6 +12,7 @@ use App\User;
 use Lcobucci\JWT\Token;
 use Tymon\JWTAuth\Token as TymonToken;
 use App\Like;
+use App\Tag;
 
 class TweetController extends Controller
 {
@@ -52,6 +53,8 @@ class TweetController extends Controller
     public function store(Request $request)
     {
 
+        // return response($request->tags);
+
         $request->validate([
             'tweet' => 'required|min:3'
         ]);
@@ -61,6 +64,13 @@ class TweetController extends Controller
             $tweet->tweet = $request->tweet;
             $tweet->user_id = auth()->id();
             $tweet->save();
+
+            foreach($request->tags[0] as $tag){
+                $newTag = new Tag;
+                $newTag->tag = $tag;
+                $newTag->tweet_id = $tweet->id;
+                $newTag->save();
+            }
         }
         catch(\Exception $e){
             return response()->json($e);
