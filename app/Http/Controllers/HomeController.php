@@ -25,14 +25,25 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    // logged user details
     public function userDetails(){
         return response()->json(auth()->user()->tweets()->count());
 
     }
-
+    // details for profile pages
     public function userProfile(Request $request, $id){
         $user = User::where('username', $id)->first();
+
         if($user){
+            $popTweets = [];
+            foreach($user->tweets()->get() as $tweet){
+                array_push($popTweets, [
+                    'likes' => $tweet->likes()->count(),
+                    'tweet' => $tweet->tweet
+                ]);
+
+            }
+
             return response()->json([
                 'user' => new UserResource($user),
                 'likes' => $user->likes()->count(),
@@ -42,6 +53,8 @@ class HomeController extends Controller
                                 ->orderByRaw('count(*) desc')
                                 ->limit(6)
                                 ->get(),
+                'pop_tweets' => $popTweets
+
 
 
 
