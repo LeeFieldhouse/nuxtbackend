@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use App\User;
 use Lcobucci\JWT\Token;
 use Tymon\JWTAuth\Token as TymonToken;
+use App\Like;
 
 class TweetController extends Controller
 {
@@ -109,6 +110,35 @@ class TweetController extends Controller
      */
     public function destroy(Tweet $tweet)
     {
-        //
+        try {
+            $tweet->delete();
+        }catch(\Exception $e){
+            return response()->json($e);
+        }
+
+        return response()->json('success');
+    }
+
+    public function like(Request $request, $id){
+
+        // checks if tweet is liked already
+        $liked = Like::where([
+            'user_id' => auth()->id(),
+            'tweet_id' => $id,
+        ])->first();
+        // If not liked already, like tweet
+        if(!$liked){
+            $like = new Like;
+            $like->user_id = auth()->id();
+            $like->tweet_id = $id;
+            $like->save();
+            return response()->json('liked!');
+        }else {
+            $liked->delete();
+            return response()->json('done');
+        }
+
+
+
     }
 }

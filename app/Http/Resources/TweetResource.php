@@ -17,9 +17,15 @@ class TweetResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user' => $this->user->username,
+            'user' => [
+                'username' => $this->user->username,
+                'avatar' => $this->user->avatar
+            ],
             'tweet' => $this->tweet,
-            'posted' => Carbon::parse($this->created_at->toDateTimeString())->diffForHumans()
+            'posted' => Carbon::parse($this->created_at->toDateTimeString())->diffForHumans(),
+            'likes' => $this->likes()->count(),
+            // checks if user has liked the tweet
+            'liked' => $this->likes()->where('user_id', auth()->id())->first(),
         ];
     }
 }

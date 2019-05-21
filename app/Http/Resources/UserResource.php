@@ -18,7 +18,8 @@ class UserResource extends JsonResource
             'username' => $this->username,
             'email' => $this->email,
             'created' => $this->created_at,
-            'tweet_count' => $this->tweets()->count()
+            'tweet_count' => $this->tweets()->count(),
+            'avatar' => $this->avatar
         ];
     }
 }
