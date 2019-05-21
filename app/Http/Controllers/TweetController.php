@@ -69,6 +69,7 @@ class TweetController extends Controller
                 $newTag = new Tag;
                 $newTag->tag = $tag;
                 $newTag->tweet_id = $tweet->id;
+                $newTag->user_id = auth()->id();
                 $newTag->save();
             }
         }

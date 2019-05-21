@@ -17,7 +17,9 @@ class CreateTagsTable extends Migration
             $table->increments('id');
             $table->string('tag');
             $table->integer('tweet_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->foreign('tweet_id')->references('id')->on('tweets')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

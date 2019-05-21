@@ -3,6 +3,8 @@
 use Illuminate\Database\Seeder;
 use App\User;
 use App\Tweet;
+use App\Like;
+use App\Tag;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,7 +15,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class, 20)->create();
-        factory(Tweet::class, 100)->create();
+        factory(User::class, 5)->create();
+        factory(Tweet::class, 20)->create();
+        factory(Like::class, 10)->create();
+        factory(Tag::class, 10)->create();
     }
 }

@@ -29,6 +29,7 @@ Route::group([
     Route::resource('tweet', 'TweetController');
     Route::post('tweet/like/{id}', 'TweetController@like');
     Route::get('userdetails', 'HomeController@userDetails');
+    Route::get('users/{id}', 'HomeController@userProfile');
 
     Route::get('mostpopular', 'TagController@mostPopular');
 });
