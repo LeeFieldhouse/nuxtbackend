@@ -33,7 +33,7 @@ class AuthController extends Controller
             return response()->json(['error' => "Can't find the details!"], 401);
         }
 
-        return (new UserResource(auth()->user()))->additional([
+        return (new UserResource($request->user()))->additional([
             'meta' => [
                 'token' => $token
             ]
