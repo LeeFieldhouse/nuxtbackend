@@ -53,7 +53,7 @@ class HomeController extends Controller
                                 ->orderByRaw('count(*) desc')
                                 ->limit(6)
                                 ->get(),
-                'pop_tweets' => $popTweets
+                'pop_tweets' =>   $popTweets
 
 
 

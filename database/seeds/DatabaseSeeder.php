@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'testing@testing.com',
             'avatar' => 'https://getattention.co.uk/av/'. mt_rand(1, 9) . '.png',
         ]);
-        factory(User::class, 5)->create();
-        factory(Tweet::class, 20)->create();
-        factory(Like::class, 10)->create();
-        factory(Tag::class, 10)->create();
+        factory(User::class, 20)->create();
+        factory(Tweet::class, 100)->create();
+        factory(Like::class, 500)->create();
+        factory(Tag::class, 700)->create();
     }
 }
