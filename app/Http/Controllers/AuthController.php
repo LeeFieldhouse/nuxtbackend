@@ -52,13 +52,15 @@ class AuthController extends Controller
             'username' => 'required|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
-            'avatar' => 'https://getattention.co.uk/av/'. mt_rand(1, 9) . '.png',
+
         ]);
         try {
         $user = new User;
         $user->username = str_slug($request->username);
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
+        $user->avatar = 'https://getattention.co.uk/av/'. mt_rand(1, 9) . '.png';
+
         $user->save();
 
         }
