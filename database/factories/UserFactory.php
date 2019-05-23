@@ -20,7 +20,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => bcrypt('testing'), // secret
-        'avatar' => 'http://nuxtbackend.test/av/'. mt_rand(1, 9) . '.png',
+        'avatar' => 'https://getattention.co.uk/av/'. mt_rand(1, 9) . '.png',
         'remember_token' => Str::random(10),
     ];
 });
