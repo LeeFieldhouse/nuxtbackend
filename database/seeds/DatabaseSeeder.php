@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
         User::create([
             'username' => 'testing',
             'password' => bcrypt('password'),
-            'email' => 'testing@testing.com'
+            'email' => 'testing@testing.com',
+            'avatar' => 'https://getattention.co.uk/av/'. mt_rand(1, 9) . '.png',
         ]);
         factory(User::class, 5)->create();
         factory(Tweet::class, 20)->create();
