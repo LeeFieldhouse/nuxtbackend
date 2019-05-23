@@ -32,7 +32,7 @@ class AuthController extends Controller
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => "Can't find the details!"], 401);
         }
-
+        return 'yo';
         return (new UserResource($request->user()))->additional([
             'meta' => [
                 'token' => $token
