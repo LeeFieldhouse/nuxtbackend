@@ -69,6 +69,7 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'avatar' => '<img src="https://getattention.co.uk/av/' . mt_rand(1, 9) . '.png>'
         ]);
     }
 
