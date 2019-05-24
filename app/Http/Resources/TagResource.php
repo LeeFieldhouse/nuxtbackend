@@ -21,7 +21,8 @@ class TagResource extends JsonResource
             array_push($tweets, [
                 'tweet' => [
                     'tweet' => $tag->tweet->tweet,
-                    'posted' => $tag->tweet->created_at
+                    'posted' => $tag->tweet->created_at,
+                    'likes' => $tag->tweet->likes()->count()
                 ],
                 'user' => [
                     'username' => $tag->user->username,
